@@ -69,6 +69,10 @@ export type MovieDetailsData = {
     vote_count: number;
 };
 
+export type DefaultProps = {
+    user?: user;
+};
+
 type catchResponse = {
     error?: boolean;
     message?: string
