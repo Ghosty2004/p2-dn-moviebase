@@ -1,17 +1,13 @@
-import { useState, useEffect } from "react";
+import Router from "next/router";
+import Auth from "../../components/Auth";
 import Layout from "../../components/Layout";
-import { user } from "../../utils/interfaces";
+import { DefaultProps } from "../../utils/types";
 
-export default function Login(): JSX.Element {
-    const [user, setUser] = useState<user>();
-
-    useEffect(() => {
-        
-    }, []);
-
+export default function Login({ user }: DefaultProps): JSX.Element {
+    if(user) Router.push("/");
     return (
-        <Layout title="Login">
-            
+        <Layout title="Login" user={user}>
+            <Auth type="login" />
         </Layout>
     );
 };

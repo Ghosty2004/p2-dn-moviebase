@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Box, Heading, Button, Container, useDisclosure, HStack, Stack, Spacer, VStack, Grid, ButtonProps, Menu, MenuButton, MenuList, Icon, MenuItem } from "@chakra-ui/react";
+import { Box, Heading, Button, Container, useDisclosure, HStack, Stack, Spacer, VStack, Grid, Menu, MenuButton, MenuList, Icon, MenuItem } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { FaHistory, FaList, FaRegUserCircle, FaSearch, FaUser } from "react-icons/fa"
+import { FaHistory, FaList, FaRegUserCircle, FaSearch, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import NavLink from "./NavLink";
+import { DefaultProps } from "../utils/types";
 
-function Header() {
+function Header({ user }: DefaultProps) {
     const { isOpen, onToggle } = useDisclosure();
     return (
         <Box bg="blue.500">
@@ -38,9 +39,22 @@ function Header() {
 
                     <Box display={[isOpen ? 'flex' : 'none', 'flex']}>
                         <Menu>
-                            <MenuButton as={Button} leftIcon={<FaRegUserCircle />}>Account</MenuButton>
+                            <MenuButton as={Button} leftIcon={<FaRegUserCircle />}>{user ? user.name : <>User</>}</MenuButton>
                             <MenuList>
-                                <MenuItem as={Link} href="/user/me" icon={<FaUser />}>Profile</MenuItem>
+                                {user ? (
+                                    <>
+                                        <MenuItem as={Link} href="/user/me" icon={<FaUser />}>Profile</MenuItem>
+                                        <MenuItem icon={<FaSignOutAlt />} onClick={() => {
+                                            window.localStorage.removeItem("token");
+                                            window.location.href = "/";
+                                        }}>Log out</MenuItem>
+                                    </>
+                                ) : (
+                                    <>
+                                        <MenuItem as={Link} href="/user/login" icon={<FaSignInAlt />}>Log in</MenuItem>
+                                        <MenuItem as={Link} href="/user/register" icon={<FaSignInAlt />}>Register</MenuItem>
+                                    </>
+                                )}
                             </MenuList>
                         </Menu>
                     </Box>
@@ -52,19 +66,20 @@ function Header() {
 
 type LayoutProps = {
     title: string;
-} & ButtonProps;
+    children: React.ReactNode;
+} & DefaultProps;
 
-export default function Layout(props: LayoutProps) {
+export default function Layout({ title, children, user }: LayoutProps) {
     return (
         <>
             <Head>
-                <title>{props.title}</title>
+                <title>{title}</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Grid minH="100vh">
                 <VStack w="full" align="stretch" spacing={8}>
-                    <Header />
-                    <Box as="main" h="full">{props.children}</Box>
+                    <Header user={user} />
+                    <Box as="main" h="full">{children}</Box>
                 </VStack>
             </Grid>
         </>
