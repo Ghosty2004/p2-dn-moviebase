@@ -6,7 +6,7 @@ export default function Home(): JSX.Element {
     return (
         <Layout title="Home">
             <Center h="full">
-                <Heading as="h2">Working</Heading>
+                <Heading as="h2">Welcome to homepage</Heading>
             </Center>
         </Layout>
     );
