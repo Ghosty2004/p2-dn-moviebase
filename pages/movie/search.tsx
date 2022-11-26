@@ -1,7 +1,7 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Container, IconButton, Input, InputGroup, InputRightElement, VStack, Text, Progress, UnorderedList, ListItem, Button, Badge } from "@chakra-ui/react";
+import { Container, IconButton, Input, InputGroup, InputRightElement, VStack, Text, Progress, Badge, Table, TableContainer, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import Layout from "../../components/Layout";
 import { fetcher } from "../../utils/api";
@@ -23,17 +23,26 @@ function RenderResults(props: RenderResultsProps): JSX.Element {
             ): !data.results?.length ? (
                 <Text>No results</Text>
             ): (
-                <UnorderedList stylePosition="inside">
-                    {data.results.map((result, index) => (
-                        <ListItem key={index}>
-                            <Link href={`/movie/details/${result.id}`}>
-                                <Button as="a" variant="link" rightIcon={<Badge>{result.release_date}</Badge>}>
-                                    <Text as="span">{result.title}</Text>
-                                </Button>
-                            </Link>
-                        </ListItem>
-                    ))}
-                </UnorderedList> 
+                <TableContainer>
+                    <Table>
+                        <Thead>
+                            <Tr>
+                                <Th>ID</Th>
+                                <Th>Title</Th>
+                                <Th>Release Date</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {data.results.map((result, index) => (
+                                <Tr key={index}>
+                                    <Td>{result.id}</Td>
+                                    <Td><Link href={`/movie/details/${result.id}`} style={{ display: "inline-flex" }}>{result.title}</Link></Td>
+                                    <Td><Badge>{result.release_date}</Badge></Td>
+                                </Tr>
+                            ))}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
             )}
         </>
     );
@@ -52,7 +61,7 @@ export default function Search(): JSX.Element {
                             <IconButton aria-label="Search" icon={<SearchIcon />} type="submit" />
                         </InputRightElement>
                     </InputGroup>
-                    <RenderResults query={searchText} />
+                    {searchText.length ? (<RenderResults query={searchText} />) : null}
                 </VStack>
             </Container>
         </Layout>
