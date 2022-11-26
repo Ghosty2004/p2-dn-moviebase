@@ -1,3 +1,5 @@
+import { user } from "./interfaces";
+
 export type MovieSearchData = {
     page: number;
     results: Array<{
@@ -66,3 +68,12 @@ export type MovieDetailsData = {
     vote_average: number;
     vote_count: number;
 };
+
+type catchResponse = {
+    error?: boolean;
+    message?: string
+};
+
+export type userValidateResponse = catchResponse & user;
+export type userLoginResonse = catchResponse & { token?: string };
+export type userRegisterResponse = catchResponse & user;
