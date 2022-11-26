@@ -1,20 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Box, Heading, Button, Container, useDisclosure, HStack, Stack, Spacer, VStack, Grid, ButtonProps, Menu, Icon } from "@chakra-ui/react";
+import { Box, Heading, Button, Container, useDisclosure, HStack, Stack, Spacer, VStack, Grid, ButtonProps, Menu, MenuButton, MenuList, Icon, MenuItem } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { FaUser, FaUserAlt } from "react-icons/fa"
-
-type MenuItemProps = {
-    href: string;
-} & ButtonProps
-
-const MenuItem = (props: MenuItemProps) => (
-    <Link href={props.href} passHref legacyBehavior>
-        <Button as="a" variant="link" {...props}>
-            {props.children}
-        </Button>
-    </Link>
-);
+import { FaHistory, FaList, FaRegUserCircle, FaSearch, FaUser } from "react-icons/fa"
+import NavLink from "./NavLink";
 
 function Header() {
     const { isOpen, onToggle } = useDisclosure();
@@ -23,9 +12,7 @@ function Header() {
             <Container>
                 <Stack as="nav" direction={['column', 'row']} justify="space-between" wrap="wrap" py="1.5rem">
                     <HStack justify="space-between">
-                        <MenuItem href="/" mr={8}>
-                            <Heading size="lg">Moviebase</Heading>
-                        </MenuItem>
+                        <Heading as={Link} href="/" mr={8} size="lg">Moviebase</Heading>
                         <Box display={['block', 'none']} onClick={onToggle}>
                             <Button variant="outline">
                                 <HamburgerIcon />
@@ -34,15 +21,28 @@ function Header() {
                     </HStack>
 
                     <Stack direction={['column', 'row']} justify="start" align={['start', 'center']} display={[isOpen ? 'flex' : 'none', 'flex']} spacing={4}>
-                        <MenuItem href="/movie/search">Search</MenuItem>
-                        <MenuItem href="/watchlist" disabled>Watchlist</MenuItem>
-                        <MenuItem href="/history" disabled>History</MenuItem>
+                        <Menu isLazy>
+                            <MenuButton as={NavLink} href="/movie/search">
+                                <MenuItem icon={<FaSearch />}>Search</MenuItem>
+                            </MenuButton>
+                            <MenuButton as={NavLink} href="/movie/watchlist">
+                                <MenuItem icon={<FaList />} disabled>Watchlist</MenuItem>
+                            </MenuButton>
+                            <MenuButton as={NavLink} href="/movie/history">
+                                <MenuItem icon={<FaHistory />} disabled>History</MenuItem>
+                            </MenuButton>
+                        </Menu>
                     </Stack>
 
                     <Spacer />
 
                     <Box display={[isOpen ? 'flex' : 'none', 'flex']}>
-                        <MenuItem href="/account" leftIcon={<FaUserAlt />}> Account</MenuItem>
+                        <Menu>
+                            <MenuButton as={Button} leftIcon={<FaRegUserCircle />}>Account</MenuButton>
+                            <MenuList>
+                                <MenuItem as={Link} href="/user/me" icon={<FaUser />}>Profile</MenuItem>
+                            </MenuList>
+                        </Menu>
                     </Box>
                 </Stack>
             </Container>
