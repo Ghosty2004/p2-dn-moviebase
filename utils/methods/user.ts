@@ -1,4 +1,4 @@
-import { userLoginResonse, userRegisterResponse, userValidateResponse } from "../types";
+import { userLoginResonse, userPasswordChangeResponse, userRegisterResponse, userValidateResponse } from "../types";
 
 export function validateUser(token: string): Promise<userValidateResponse> {
     return new Promise((resolve) => {
@@ -32,6 +32,18 @@ export function registerUser(name: string, eMail: string, password: string): Pro
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ name, eMail, password }),
+        }).then((response) => response.json()))
+    });
+};
+
+export function changeUserPassword(token: string, { oldPassword, newPassword, newPasswordAgain }: { oldPassword: string, newPassword: string, newPasswordAgain: string }): Promise<userPasswordChangeResponse> {
+    return new Promise((resolve) => {
+        resolve(fetch("/api/user/change-password", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token, oldPassword, newPassword, newPasswordAgain }),
         }).then((response) => response.json()))
     });
 };
