@@ -56,7 +56,7 @@ export default function Details({ user }: DefaultProps): JSX.Element {
                                     ))}
                                     <Spacer />
                                     {data.spoken_languages.map((language, index) => (
-                                        <Tooltip label={language.english_name}>
+                                        <Tooltip label={language.english_name} key={index}>
                                             <img src={buildFlagImageUrl(language.iso_639_1)} alt={language.english_name} width="24" height="24" key={index} />
                                         </Tooltip>
                                     ))}
