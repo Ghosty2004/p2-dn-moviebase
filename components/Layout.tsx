@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Box, Heading, Button, Container, useDisclosure, HStack, Stack, Spacer, VStack, Grid, Menu, MenuButton, MenuList, Icon, MenuItem } from "@chakra-ui/react";
+import { Box, Heading, Button, Container, useDisclosure, HStack, Stack, Spacer, VStack, Grid, Menu, MenuButton, MenuList, MenuItem, Image } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { FaHistory, FaList, FaRegUserCircle, FaSearch, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import NavLink from "./NavLink";
@@ -13,7 +13,7 @@ function Header({ user }: DefaultProps) {
             <Container>
                 <Stack as="nav" direction={['column', 'row']} justify="space-between" wrap="wrap" py="1.5rem">
                     <HStack justify="space-between">
-                        <Heading as={Link} href="/" mr={8} size="lg">Moviebase</Heading>
+                        <Heading as={Link} display="flex" href="/" mr={8} size="lg"><Image src="/logo.png" width="30px" alt="logo" mr={2} /> Moviebase</Heading>
                         <Box display={['block', 'none']} onClick={onToggle}>
                             <Button variant="outline">
                                 <HamburgerIcon />
@@ -66,15 +66,23 @@ function Header({ user }: DefaultProps) {
 
 type LayoutProps = {
     title: string;
+    meta?: {
+        description?: string;
+        keywords?: string;
+    };
     children: React.ReactNode;
 } & DefaultProps;
 
-export default function Layout({ title, children, user }: LayoutProps) {
+export default function Layout({ title, meta, children, user }: LayoutProps) {
     return (
         <>
             <Head>
                 <title>{title}</title>
                 <link rel="icon" href="/favicon.ico" />
+                <meta property="og:title" content={title} />
+                <meta property="og:image" content="http://ghosty2004.go.ro/logo.png" />
+                {meta?.description ? <meta property="og:description" content={meta.description} /> : null}
+                {meta?.keywords ? <meta property="og:keywords" content={meta.keywords} /> : null}
             </Head>
             <Grid minH="100vh">
                 <VStack w="full" align="stretch" spacing={8}>
