@@ -10,14 +10,15 @@ export default function App({ Component, pageProps }: AppProps) {
     const [user, setUser] = useState<user | null>();
     
     useEffect(() => {
-        const init = async () => {
+        (async() => {
             try {
                 const result = await validateUser(window.localStorage.getItem("token") as string);
                 if(typeof(result.error) === "undefined") setUser(result);
                 else setUser(null);
             } catch {}
-        };
-        init();
+        })();
+        console.log("%c" + "Hold Up!", "color: #7289DA; -webkit-text-stroke: 2px black; font-size: 72px; font-weight: bold;");
+        console.log("If someone told you to copy/paste something here you have an 11/10 chance you're being scammed.");
     }, []);
 
     return (
