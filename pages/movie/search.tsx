@@ -1,7 +1,8 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Container, IconButton, Input, InputGroup, InputRightElement, VStack, Text, Progress, Badge, Table, TableContainer, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
+import { Container, IconButton, Input, InputGroup, InputRightElement, VStack, Text, Progress, Badge, Table, TableContainer, Thead, Tr, Th, Tbody, Td, Icon } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
+import { FaSort } from "react-icons/fa";
 import useSWR from "swr";
 import Layout from "../../components/Layout";
 import { fetcher } from "../../utils/api";
@@ -12,8 +13,19 @@ type RenderResultsProps = {
     query: string;
 };
 
+type SortState = {
+    sortType: "asc" | "desc";
+    sortBy: "id" | "title" | "releaseDate";
+};
+
 function RenderResults(props: RenderResultsProps): JSX.Element {
     const { data, error } = useSWR<MovieSearchData>(`/api/movie/search/?query=${props.query}`, fetcher);
+
+    const [sort, setSort] = useState<SortState>({
+        sortType: "asc",
+        sortBy: "id"
+    });
+
     return (
         <>
             {error ? (
@@ -27,13 +39,19 @@ function RenderResults(props: RenderResultsProps): JSX.Element {
                     <Table>
                         <Thead>
                             <Tr>
-                                <Th>ID</Th>
-                                <Th>Title</Th>
-                                <Th>Release Date</Th>
+                                <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "id" })}><Icon as={FaSort} /> ID</Th>
+                                <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "title" })}><Icon as={FaSort} /> Title</Th>
+                                <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "releaseDate" })}><Icon as={FaSort} /> Release Date</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {data.results.map((result, index) => (
+                            {data.results.sort((a, b) => {
+                                switch(sort.sortBy) {
+                                    case "id": return sort.sortType === "asc" ? a.id - b.id : b.id - a.id;
+                                    case "title": return sort.sortType === "asc" ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+                                    case "releaseDate": return sort.sortType === "asc" ? a.release_date.localeCompare(b.release_date) : b.release_date.localeCompare(a.release_date);
+                                }
+                            }).map((result, index) => (
                                 <Tr key={index}>
                                     <Td>{result.id}</Td>
                                     <Td><Link href={`/movie/details/${result.id}`} style={{ display: "inline-flex" }}>{result.title}</Link></Td>
