@@ -81,3 +81,4 @@ type catchResponse = {
 export type userValidateResponse = catchResponse & user;
 export type userLoginResonse = catchResponse & { token?: string };
 export type userRegisterResponse = catchResponse & user;
+export type userPasswordChangeResponse = catchResponse & { success?: boolean, newToken?: string };
