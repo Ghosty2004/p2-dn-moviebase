@@ -5,14 +5,14 @@ import useSWR from "swr";
 import Layout from "../../../components/Layout";
 import { buildImageUrl, fetcher } from "../../../utils/api";
 import { ERROR_UNEXPECTED } from "../../../utils/errors";
-import { MovieDetailsData } from "../../../utils/types";
+import { DefaultProps, MovieDetailsData } from "../../../utils/types";
 
-export default function Details(): JSX.Element {
+export default function Details({ user }: DefaultProps): JSX.Element {
     const { id } = useRouter().query;
     const { data, error } = useSWR<MovieDetailsData>(`/api/movie/details/?id=${id}`, fetcher);
 
     return (
-        <Layout title={data?.title || "Not found"}>
+        <Layout title={data?.title || "Not found"} user={user}>
             <Container>
                 {error ? (
                     <Text color="red">{ERROR_UNEXPECTED}</Text>

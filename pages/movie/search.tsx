@@ -6,7 +6,7 @@ import useSWR from "swr";
 import Layout from "../../components/Layout";
 import { fetcher } from "../../utils/api";
 import { ERROR_UNEXPECTED } from "../../utils/errors";
-import { MovieSearchData } from "../../utils/types";
+import { DefaultProps, MovieSearchData } from "../../utils/types";
 
 type RenderResultsProps = {
     query: string;
@@ -48,11 +48,11 @@ function RenderResults(props: RenderResultsProps): JSX.Element {
     );
 }
 
-export default function Search(): JSX.Element {
+export default function Search({ user }: DefaultProps): JSX.Element {
     const [searchText, setSearchText] = useState<string>("");
 
     return (
-        <Layout title="Search">
+        <Layout title="Search" user={user}>
             <Container>
                 <VStack spacing={4} align="stretch">
                     <InputGroup as={"form"} onSubmit={(e) => e.preventDefault()}>

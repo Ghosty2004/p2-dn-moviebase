@@ -1,8 +1,9 @@
 import Layout from "../../components/Layout";
+import { DefaultProps } from "../../utils/types";
 
-export default function WatchList(): JSX.Element {
+export default function WatchList({ user }: DefaultProps): JSX.Element {
     return (
-        <Layout title="Your watchlist">
+        <Layout title="Your watchlist" user={user}>
             
         </Layout>
     );
