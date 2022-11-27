@@ -4,4 +4,6 @@ export interface user {
     password?: string;
     joinDate?: Date;
     token?: string;
+    watchList?: Array<number>;
+    historyList?: Array<number>;
 };

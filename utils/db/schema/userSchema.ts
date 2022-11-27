@@ -6,5 +6,7 @@ export const userSchema = new Schema<user>({
     eMail: Schema.Types.String,
     password: Schema.Types.String,
     joinDate: Schema.Types.Date,
-    token: Schema.Types.String
+    token: Schema.Types.String,
+    watchList: [Schema.Types.Number],
+    historyList: [Schema.Types.Number]
 });
