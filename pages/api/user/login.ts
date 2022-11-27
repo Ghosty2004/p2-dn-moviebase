@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { users } from "../../../utils/db";
 import { ERROR_METHOD_NOT_ALLOWED, ERROR_UNEXPECTED } from "../../../utils/errors";
+import { userLoginResonse } from "../../../utils/types";
 
-export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse<userLoginResonse>) {
     if(request.method !== "POST") return response.json({ error: true, message: ERROR_METHOD_NOT_ALLOWED });
     try {
         const { name, password } = request.body;
