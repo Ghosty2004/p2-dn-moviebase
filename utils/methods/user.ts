@@ -1,4 +1,4 @@
-import { userLoginResonse, userPasswordChangeResponse, userRegisterResponse, userValidateResponse } from "../types";
+import { userAddHistoryListResponse, userLoginResonse, userPasswordChangeResponse, userRegisterResponse, userToggleWatchListResponse, userValidateResponse } from "../types";
 
 export function validateUser(token: string): Promise<userValidateResponse> {
     return new Promise((resolve) => {
@@ -44,6 +44,30 @@ export function changeUserPassword(token: string, { oldPassword, newPassword, ne
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ token, oldPassword, newPassword, newPasswordAgain }),
+        }).then((response) => response.json()))
+    });
+};
+
+export function toggleUserWatchList(token: string, id: number): Promise<userToggleWatchListResponse> {
+    return new Promise((resolve) => {
+        resolve(fetch("/api/user/toggle-watch-list", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token, id }),
+        }).then((response) => response.json()))
+    });
+};
+
+export function addUserHistoryList(token: string, id: number): Promise<userAddHistoryListResponse> {
+    return new Promise((resolve) => {
+        resolve(fetch("/api/user/add-history-list", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token, id }),
         }).then((response) => response.json()))
     });
 };
