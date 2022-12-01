@@ -82,3 +82,5 @@ export type userValidateResponse = catchResponse & user;
 export type userLoginResonse = catchResponse & { token?: string };
 export type userRegisterResponse = catchResponse & user;
 export type userPasswordChangeResponse = catchResponse & { success?: boolean, newToken?: string };
+export type userToggleWatchListResponse = catchResponse & { success?: boolean, status?: "added" | "removed" };
+export type userAddHistoryListResponse = catchResponse & { success?: boolean };

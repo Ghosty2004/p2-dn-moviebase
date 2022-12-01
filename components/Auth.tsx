@@ -30,6 +30,7 @@ async function authProcessThis(toast: CreateToastFnReturn, type: ValidTypes, { n
             registerUser(name, eMail, password).then(async(result) => {
                 await timeout(1000);
                 if(result.error) return toast.update(toastId, { title: result.message, status: "error" });
+                toast.update(toastId, { title: "Signed up.", status: "success" });
                 await timeout(2000);
                 window.localStorage.setItem("token", result.token as string);
                 window.location.href = "/user/me";

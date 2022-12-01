@@ -5,5 +5,8 @@ export interface user {
     joinDate?: Date;
     token?: string;
     watchList?: Array<number>;
-    historyList?: Array<number>;
+    historyList?: Array<{
+        id: number;
+        date: Date;
+    }>;
 };

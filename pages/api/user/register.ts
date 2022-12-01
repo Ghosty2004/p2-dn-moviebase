@@ -10,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const { name, eMail, password } = request.body;
         if(await(users.exists({ $or: [{ name }, { eMail }] }))) return response.json({ error: true, message: "This user is already registered." });
         const token = createRandomToken(20);
-        response.json(await new users({ name, eMail, password, token }).save());
+        response.json(await new users({ name, eMail, password, token, joinDate: new Date() }).save());
     } catch(e) {
         console.log(e);
         response.json({ error: true, message: ERROR_UNEXPECTED });
