@@ -15,7 +15,7 @@ type RenderResultsProps = {
 
 type SortState = {
     sortType: "asc" | "desc";
-    sortBy: "id" | "title" | "releaseDate";
+    sortBy: "id" | "title" | "releaseDate" | "voteCount";
 };
 
 function RenderResults(props: RenderResultsProps): JSX.Element {
@@ -42,6 +42,7 @@ function RenderResults(props: RenderResultsProps): JSX.Element {
                                 <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "id" })}><Icon as={FaSort} /> ID</Th>
                                 <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "title" })}><Icon as={FaSort} /> Title</Th>
                                 <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "releaseDate" })}><Icon as={FaSort} /> Release Date</Th>
+                                <Th cursor="pointer" onClick={() => setSort({ sortType: sort.sortType === "asc" ? "desc" : "asc", sortBy: "voteCount" })}><Icon as={FaSort} /> Vote Count</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -50,12 +51,14 @@ function RenderResults(props: RenderResultsProps): JSX.Element {
                                     case "id": return sort.sortType === "asc" ? a.id - b.id : b.id - a.id;
                                     case "title": return sort.sortType === "asc" ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
                                     case "releaseDate": return sort.sortType === "asc" ? a.release_date.localeCompare(b.release_date) : b.release_date.localeCompare(a.release_date);
+                                    case "voteCount": return sort.sortType === "asc" ? a.vote_count - b.vote_count : b.vote_count - a.vote_count;
                                 }
                             }).map((result, index) => (
                                 <Tr key={index}>
                                     <Td>{result.id}</Td>
                                     <Td><Link href={`/movie/details/${result.id}`} style={{ display: "inline-flex" }}>{result.title}</Link></Td>
                                     <Td><Badge>{result.release_date}</Badge></Td>
+                                    <Td>{result.vote_count}</Td>
                                 </Tr>
                             ))}
                         </Tbody>
