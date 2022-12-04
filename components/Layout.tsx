@@ -26,10 +26,10 @@ function Header({ user }: DefaultProps) {
                             <MenuButton as={NavLink} href="/movie/search">
                                 <MenuItem icon={<FaSearch />}>Search</MenuItem>
                             </MenuButton>
-                            <MenuButton as={NavLink} href="/movie/watchlist">
+                            <MenuButton as={NavLink} href="/user/watchlist">
                                 <MenuItem icon={<FaList />} disabled>Watchlist</MenuItem>
                             </MenuButton>
-                            <MenuButton as={NavLink} href="/movie/history">
+                            <MenuButton as={NavLink} href="/user/history">
                                 <MenuItem icon={<FaHistory />} disabled>History</MenuItem>
                             </MenuButton>
                         </Menu>
