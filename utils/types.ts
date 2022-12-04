@@ -84,3 +84,6 @@ export type userRegisterResponse = catchResponse & user;
 export type userPasswordChangeResponse = catchResponse & { success?: boolean, newToken?: string };
 export type userToggleWatchListResponse = catchResponse & { success?: boolean, status?: "added" | "removed" };
 export type userAddHistoryListResponse = catchResponse & { success?: boolean };
+export type userFetchWatchListResponse = catchResponse & { result?: Array<MovieDetailsData> };
+export type userFetchHistoryResponse = catchResponse & { result?: Array<{ viewedAt: string } & MovieDetailsData> };
+export type userRemoveWatchListResponse = catchResponse & { message?: string };

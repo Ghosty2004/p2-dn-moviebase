@@ -1,4 +1,4 @@
-import { userAddHistoryListResponse, userLoginResonse, userPasswordChangeResponse, userRegisterResponse, userToggleWatchListResponse, userValidateResponse } from "../types";
+import { userAddHistoryListResponse, userFetchHistoryResponse, userFetchWatchListResponse, userLoginResonse, userPasswordChangeResponse, userRegisterResponse, userRemoveWatchListResponse, userToggleWatchListResponse, userValidateResponse } from "../types";
 
 export function validateUser(token: string): Promise<userValidateResponse> {
     return new Promise((resolve) => {
@@ -63,6 +63,30 @@ export function toggleUserWatchList(token: string, id: number): Promise<userTogg
 export function addUserHistoryList(token: string, id: number): Promise<userAddHistoryListResponse> {
     return new Promise((resolve) => {
         resolve(fetch("/api/user/add-history-list", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token, id }),
+        }).then((response) => response.json()))
+    });
+};
+
+export function fetchUserWatchlist(token: string): Promise<userFetchWatchListResponse> {
+    return new Promise((resolve) => {
+        resolve(fetch(`/api/user/fetch-watchlist/?token=${token}`).then((response) => response.json()))
+    });
+};
+
+export function fetchUserHistory(token: string): Promise<userFetchHistoryResponse> {
+    return new Promise((resolve) => {
+        resolve(fetch(`/api/user/fetch-history/?token=${token}`).then((response) => response.json()))
+    });
+};
+
+export function userRemoveFromWatchList(token: string, id: number): Promise<userRemoveWatchListResponse> {
+    return new Promise((resolve) => {
+        resolve(fetch("/api/user/remove-watchlist", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
