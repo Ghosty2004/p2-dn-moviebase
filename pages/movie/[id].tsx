@@ -3,13 +3,13 @@ import { Badge, Box, Button, Center, CircularProgress, Container, Heading, HStac
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import Layout from "../../../components/Layout";
-import { buildFlagImageUrl, buildImageUrl, fetcher } from "../../../utils/api";
-import { ERROR_UNEXPECTED } from "../../../utils/errors";
-import { DefaultProps, MovieDetailsData } from "../../../utils/types";
+import Layout from "../../components/Layout";
+import { buildFlagImageUrl, buildImageUrl, fetcher } from "../../utils/api";
+import { ERROR_UNEXPECTED } from "../../utils/errors";
+import { DefaultProps, MovieDetailsData } from "../../utils/types";
 import { FaExternalLinkAlt, FaFlag, FaMinus, FaPlus, FaSpeakap, FaStar } from "react-icons/fa";
 import Link from "next/link";
-import { addUserHistoryList, toggleUserWatchList } from "../../../utils/methods/user";
+import { addUserHistoryList, toggleUserWatchList } from "../../utils/methods/user";
 
 function RenderActions({ user, movieId }: DefaultProps & { movieId: number }): JSX.Element {
     const [isInWatchList, setIsInWatchList] = useState<boolean>(user?.watchList?.includes(movieId) || false);
