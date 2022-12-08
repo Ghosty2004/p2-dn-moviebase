@@ -10,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const user = await users.findOne({ token });
         if(!user) return response.json({ error: true, message: ERROR_INVALID_AUTHORIZATION });
         if(user.historyList?.some(s => s.id === id)) return response.json({ error: true, message: "This movie is already in your history list." });
-        user.historyList?.push({ id, date: new Date() });
+        user.historyList?.filter((_, i) => i < 9).push({ id, date: new Date() });
         await user.save();
         response.json({ success: true });
     } catch(e) {
