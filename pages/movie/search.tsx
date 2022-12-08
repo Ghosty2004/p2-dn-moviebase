@@ -48,15 +48,15 @@ function RenderResults(props: RenderResultsProps): JSX.Element {
                         <Tbody>
                             {data.results.sort((a, b) => {
                                 switch(sort.sortBy) {
-                                    case "id": return sort.sortType === "asc" ? a.id - b.id : b.id - a.id;
-                                    case "title": return sort.sortType === "asc" ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-                                    case "releaseDate": return sort.sortType === "asc" ? a.release_date.localeCompare(b.release_date) : b.release_date.localeCompare(a.release_date);
-                                    case "voteCount": return sort.sortType === "asc" ? a.vote_count - b.vote_count : b.vote_count - a.vote_count;
+                                    case "id": return a.id && b.id ? (sort.sortType === "asc" ? a.id - b.id : b.id - a.id) : 0;
+                                    case "title": return a.title && b.title ? (sort.sortType === "asc" ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)) : 0;
+                                    case "releaseDate": return a.release_date && b.release_date ? (sort.sortType === "asc" ? a.release_date.localeCompare(b.release_date) : b.release_date.localeCompare(a.release_date)) : 0;
+                                    case "voteCount": return a.vote_count && b.vote_count ? (sort.sortType === "asc" ? a.vote_count - b.vote_count : b.vote_count - a.vote_count) : 0;
                                 }
                             }).map((result, index) => (
                                 <Tr key={index}>
                                     <Td>{result.id}</Td>
-                                    <Td><Link href={`/movie/details/${result.id}`} style={{ display: "inline-flex" }}>{result.title}</Link></Td>
+                                    <Td><Link href={`/movie/${result.id}`} style={{ display: "inline-flex" }}>{result.title}</Link></Td>
                                     <Td><Badge>{result.release_date}</Badge></Td>
                                     <Td>{result.vote_count}</Td>
                                 </Tr>

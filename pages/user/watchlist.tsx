@@ -40,7 +40,7 @@ export default function Watchlist({ user }: DefaultProps): JSX.Element {
                                 {watchList.map((movie) => (
                                     <Tr key={movie.id}>
                                         <Td>{movie.id}</Td>
-                                        <Td><Link href={`/movie/details/${movie.id}`}>{movie.title}</Link></Td>
+                                        <Td><Link href={`/movie/${movie.id}`}>{movie.title}</Link></Td>
                                         <Td>
                                             <Button leftIcon={ <FaTrash /> } onClick={() => {
                                                 const toastId = toast({ title: "Removing from watchlist", status: "loading" });

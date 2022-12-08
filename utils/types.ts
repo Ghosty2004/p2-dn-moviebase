@@ -1,25 +1,25 @@
 import { user } from "./interfaces";
 
 export type MovieSearchData = {
-    page: number;
-    results: Array<{
-        adult: boolean;
-        backdrop_path: string;
-        genre_ids: Array<number>;
-        id: number;
-        original_language: string;
-        original_title: string;
-        overview: string;
-        popularity: number;
-        poster_path: string;
-        release_date: string;
-        title: string;
-        video: boolean;
-        vote_average: number;
-        vote_count: number;
+    page?: number;
+    results?: Array<{
+        adult?: boolean;
+        backdrop_path?: string;
+        genre_ids?: Array<number>;
+        id?: number;
+        original_language?: string;
+        original_title?: string;
+        overview?: string;
+        popularity?: number;
+        poster_path?: string;
+        release_date?: string;
+        title?: string;
+        video?: boolean;
+        vote_average?: number;
+        vote_count?: number;
     }>;
-    total_pages: number;
-    total_results: number;
+    total_pages?: number;
+    total_results?: number;
 };
 
 export type MovieDetailsData = {
@@ -87,3 +87,4 @@ export type userAddHistoryListResponse = catchResponse & { success?: boolean };
 export type userFetchWatchListResponse = catchResponse & { result?: Array<MovieDetailsData> };
 export type userFetchHistoryResponse = catchResponse & { result?: Array<{ viewedAt: string } & MovieDetailsData> };
 export type userRemoveWatchListResponse = catchResponse & { message?: string };
+export type userRecommendationResponse = catchResponse & MovieSearchData;

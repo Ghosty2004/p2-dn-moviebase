@@ -1,4 +1,7 @@
-import { userAddHistoryListResponse, userFetchHistoryResponse, userFetchWatchListResponse, userLoginResonse, userPasswordChangeResponse, userRegisterResponse, userRemoveWatchListResponse, userToggleWatchListResponse, userValidateResponse } from "../types";
+import { userAddHistoryListResponse, userFetchHistoryResponse, userFetchWatchListResponse, userLoginResonse, userPasswordChangeResponse, userRecommendationResponse, userRegisterResponse, userRemoveWatchListResponse, userToggleWatchListResponse, userValidateResponse } from "../types";
+import useSWR from "swr";
+import { fetcher } from "../api";
+
 
 export function validateUser(token: string): Promise<userValidateResponse> {
     return new Promise((resolve) => {
@@ -94,4 +97,8 @@ export function userRemoveFromWatchList(token: string, id: number): Promise<user
             body: JSON.stringify({ token, id }),
         }).then((response) => response.json()))
     });
+};
+
+export function fetchUserRecommendation(token: string): Promise<userRecommendationResponse> {
+    return new Promise((resolve) => resolve(fetch(`/api/user/fetch-recommendation/?token=${token}`).then(response => response.json())))
 };

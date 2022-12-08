@@ -39,7 +39,7 @@ export default function History({ user }: DefaultProps): JSX.Element {
                                 {history.map((movie) => (
                                     <Tr key={movie.id}>
                                         <Td>{movie.id}</Td>
-                                        <Td><Link href={`/movie/details/${movie.id}`}>{movie.title}</Link></Td>
+                                        <Td><Link href={`/movie/${movie.id}`}>{movie.title}</Link></Td>
                                         <Td>{movie.viewedAt}</Td>
                                     </Tr>
                                 ))}
