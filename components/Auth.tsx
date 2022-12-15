@@ -3,6 +3,7 @@ import { Box, Button, Center, CreateToastFnReturn, FormControl, FormLabel, Headi
 import { FaSignInAlt } from "react-icons/fa";
 import { loginUser, registerUser } from "../utils/methods/user";
 import { timeout } from "../utils/api";
+import Link from "next/link";
 
 type ValidTypes = "login" | "register";
 type InputData = {
@@ -67,6 +68,13 @@ export default function Auth({ type }: { type: ValidTypes }): JSX.Element {
                         <Button type="submit" leftIcon={<FaSignInAlt />} colorScheme="blue" onClick={() => authProcessThis(toast, type, inputData)}>{type.toUpperCase()}</Button>
                     </Center>
                 </InputGroup>
+                <Center mt={5}>
+                    {type === "login" ? (
+                        <Link href="/user/register">{"Don't have an account ?"}</Link>
+                    ) : (
+                        <Link href="/user/login">{"Already have an account ?"}</Link>
+                    )}
+                </Center>
             </Box>
         </Center>
     );
