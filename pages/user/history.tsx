@@ -10,7 +10,7 @@ import { DefaultProps, MovieDetailsData } from "../../utils/types";
 export default function History({ user }: DefaultProps): JSX.Element {
     if(!user) Router.push("/user/login");
 
-    const [history, setHistory] = useState<Array<{ viewedAt: string } & MovieDetailsData>>([]);
+    const [history, setHistory] = useState<Array<{ viewedAt: string } & MovieDetailsData> | null>(null);
 
     useEffect(() => {
         fetchUserHistory((window.localStorage.getItem("token") as string)).then((response) => {
@@ -22,8 +22,10 @@ export default function History({ user }: DefaultProps): JSX.Element {
     return (
         <Layout title="History" user={user}>
             <Container>
-                {!history.length ? (
+                {!history ? (
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                ) : !history.length ? (
+                    <>No movies in your history</>
                 ) : (
                     <>
                         <Heading><Icon as={FaHistory}/> History</Heading>

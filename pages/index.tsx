@@ -31,7 +31,7 @@ export default function Home({ user }: DefaultProps): JSX.Element {
                     <>
                         <SimpleGrid pt="20px" columns={[1, 2, 3, 4]} spacing={10}>
                             {recommendation.results.map((result) => (
-                                <Card minW="300px">
+                                <Card minW="300px" key={result.id}>
                                     <CardBody as={Link} href={`/movie/${result.id}`}>
                                         <Image
                                             src={buildImageUrl((result.poster_path as string), "w300")}

@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import { DefaultProps } from "../../utils/types";
 import { FaCheck, FaClock, FaCog, FaHeart, FaInfo, FaMailBulk } from "react-icons/fa";
 import { changeUserPassword } from "../../utils/methods/user";
-import { timeout } from "../../utils/api";
+import { convertDateToDDMMYYYY, timeout } from "../../utils/api";
 
 export default function Me({ user }: DefaultProps): JSX.Element {
     if(!user) Router.push("/user/login");
@@ -37,11 +37,11 @@ export default function Me({ user }: DefaultProps): JSX.Element {
                                 </Tr>
                                 <Tr>
                                     <Td><Icon as={FaClock} /> Join Date</Td>
-                                    <Td><Badge>dd/mm/yyyy</Badge></Td>
+                                    <Td><Badge>{convertDateToDDMMYYYY(new Date(user?.joinDate as Date))}</Badge></Td>
                                 </Tr>
                                 <Tr>
-                                    <Td><Icon as={FaHeart} /> Liked movies</Td>
-                                    <Td><Badge>0</Badge></Td>
+                                    <Td><Icon as={FaHeart} /> Watched movies</Td>
+                                    <Td><Badge>{user?.watchList?.length}</Badge></Td>
                                 </Tr>
                             </Table>
                         </CardBody>

@@ -37,11 +37,9 @@ export default function Details({ user }: DefaultProps): JSX.Element {
     const { id } = useRouter().query;
     const { data, error } = useSWR<MovieDetailsData>(`/api/movie/details/?id=${id}`, fetcher);
 
-    useEffect(() => {
-        if(!error && data?.id && user) {
-            addUserHistoryList((localStorage.getItem("token") as string), data.id);
-        }
-    });
+    if(!error && data?.id && user) {
+        addUserHistoryList((localStorage.getItem("token") as string), data.id);
+    }
 
     return (
         <Layout title={data?.title || "Not found"} user={user}>

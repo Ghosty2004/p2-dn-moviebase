@@ -10,7 +10,7 @@ import { DefaultProps, MovieDetailsData } from "../../utils/types";
 export default function Watchlist({ user }: DefaultProps): JSX.Element {
     if(!user) Router.push("/user/login");
 
-    const [watchList, setWatchlist] = useState<Array<MovieDetailsData>>([]);
+    const [watchList, setWatchlist] = useState<Array<MovieDetailsData> | null>(null);
     const toast = useToast({ position: "bottom-right", isClosable: true });
 
     useEffect(() => {
@@ -23,8 +23,10 @@ export default function Watchlist({ user }: DefaultProps): JSX.Element {
     return (
         <Layout title="Your watchlist" user={user}>
             <Container>
-                {!watchList.length ? (
+                {!watchList ? (
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                ) : !watchList.length ? (
+                    <>No movies in your watchlist</>
                 ) : (
                     <>
                         <Heading><Icon as={FaList} /> Your watchlist</Heading>

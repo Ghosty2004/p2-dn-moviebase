@@ -10,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const user = await users.findOne({ token });
         if(!user) return response.json({ error: true, message: ERROR_INVALID_AUTHORIZATION });
         const history = user.historyList || [];
-        response.json({ result: await Promise.all(history.sort((a, b) => a.id - b.id).map(async m => new Object({ viewedAt: m.date.toLocaleDateString(), ...await fetcher(`https://api.themoviedb.org/3/movie/${m.id}?api_key=${process.env.TMDB_API_KEY}`, { method: "GET" }) }))) });
+        response.json({ result: await Promise.all(history.sort((a, b) => b.date.getTime() - a.date.getTime()).map(async m => new Object({ viewedAt: m.date.toLocaleString("us"), ...await fetcher(`https://api.themoviedb.org/3/movie/${m.id}?api_key=${process.env.TMDB_API_KEY}`, { method: "GET" }) }))) });
     } catch(e) {
         console.log(e);
         response.json({ error: true, message: ERROR_UNEXPECTED });
